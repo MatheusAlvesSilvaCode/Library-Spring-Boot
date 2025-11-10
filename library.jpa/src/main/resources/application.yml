@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: library.jpa
+  datasource:
+    url: jdbc:postgresql://localhost:5432/library
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update # Apenas para estudo, não é recomendado e muitas vezes nem possível.
+    show-sql: true # Mostra no log o sql.
