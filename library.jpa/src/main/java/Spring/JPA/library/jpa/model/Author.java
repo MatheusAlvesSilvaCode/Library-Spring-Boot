@@ -3,6 +3,7 @@ package Spring.JPA.library.jpa.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.UUID;
 @Table(name="author", schema = "public") //Nao é obrigatorio, mas é bom por caso voce tem uma estrutura de esquemas no seu banco
 @Getter // Anotação para gerar getter's e setter's
 @Setter // Anotação para gerar getter's e setter's
-
+@ToString
 
 public class Author {
 
@@ -36,7 +37,8 @@ public class Author {
     @Column(name = "nationality", length = 50, nullable = false)
     private String nationality;
 
-    @OneToMany(mappedBy = "author") // Um autor, para muitos livros.
+    //@OneToMany(mappedBy = "author") // Um autor, para muitos livros.
+    @Transient
     private List<Book> books;
 
 }
