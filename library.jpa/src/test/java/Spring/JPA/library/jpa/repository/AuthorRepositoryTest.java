@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -16,7 +17,7 @@ public class AuthorRepositoryTest {
     AuthorRepository repository;
 
     @Test
-    public void SalvarTest() {
+    public void SaveTest() {
         Author author = new Author(); // instanciado o objt novo autor
         author.setName("Matheus"); // Incluindo o nome.
         author.setNationality("Germany"); // incluindo nacionalidade
@@ -27,7 +28,7 @@ public class AuthorRepositoryTest {
     }
 
     @Test
-    public void atualizarTeste(){
+    public void updateTeste(){
          var id = UUID.fromString("145de23e-ec24-4c01-8f0c-04e6476c9135");
 
          Optional<Author> maybeAuthor = repository.findById(id);
@@ -38,8 +39,32 @@ public class AuthorRepositoryTest {
              System.out.println("data of Author: ");
              System.out.println(foundAuthor);
 
-             foundAuthor.setDateOfBitrh(LocalDate.of(1900, 9, 9));
+             foundAuthor.setDateOfBitrh(LocalDate.of(1998, 10, 2));
              repository.save(foundAuthor);
          }
+    }
+
+    @Test
+    public void listTest() {
+        List<Author> list = repository.findAll();
+        list.forEach(System.out::println);
+    }
+
+    @Test
+    public void countTest() {
+        System.out.println("Count of authors: " + repository.count());
+    }
+
+    @Test
+    public void deleteForTest() {
+        var id = UUID.fromString("145de23e-ec24-4c01-8f0c-04e6476c9135");
+        repository.deleteById(id);
+    }
+
+    @Test
+    public void deleteForObjectTest() {
+        var id = UUID.fromString("c111a00d-8d36-4bf4-b389-04357b839e7c");
+        var jose =  repository.findById(id).get();
+        repository.delete(jose);
     }
 }
