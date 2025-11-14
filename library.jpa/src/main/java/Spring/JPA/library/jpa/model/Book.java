@@ -35,7 +35,7 @@ public class Book {
 
     // Uma coluna que relaciona com Autor, devemos colocar o objeto nela.
     @JoinColumn(name = "id_author")
-    @ManyToOne
+    @ManyToOne//(cascade = CascadeType.ALL)
     private Author author;
 
 }
