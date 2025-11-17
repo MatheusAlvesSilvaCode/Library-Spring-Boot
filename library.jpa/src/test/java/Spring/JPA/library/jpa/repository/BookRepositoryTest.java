@@ -77,4 +77,31 @@ class BookRepositoryTest {
         book.setAuthor(author);
         repository.save(book);
     }
+
+    @Test
+    void updateAuthorfromBook(){
+        UUID id = UUID.fromString("8a596e25-052e-41dc-a2a9-1a1f75a45562");
+        var bookforupdate = repository.findById(id).orElse(null);
+
+        UUID id1 = UUID.fromString("89f299f2-bf63-4f63-a660-c01ff7ee581e"); // ID Author Matheus
+        Author matheus = authorRepository.findById(id1).orElse(null);
+
+        bookforupdate.setAuthor(matheus);
+        System.out.println("Contudo variavel Matheus: " + matheus);
+        repository.save(bookforupdate);
+
+    }
+
+    @Test
+    void delete(){
+        UUID id = UUID.fromString("8a596e25-052e-41dc-a2a9-1a1f75a45562");
+        repository.deleteById(id);
+
+    }
+
+    @Test
+    void deleteCascade(){
+        UUID id = UUID.fromString("b661754a-929b-41e4-a3bc-a6642042af03");
+        repository.deleteById(id);
+    }
 }
