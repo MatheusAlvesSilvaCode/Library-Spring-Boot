@@ -6,6 +6,7 @@ import Spring.JPA.library.jpa.model.GenreBook;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -96,12 +97,23 @@ class BookRepositoryTest {
     void delete(){
         UUID id = UUID.fromString("8a596e25-052e-41dc-a2a9-1a1f75a45562");
         repository.deleteById(id);
-
     }
 
     @Test
     void deleteCascade(){
         UUID id = UUID.fromString("b661754a-929b-41e4-a3bc-a6642042af03");
         repository.deleteById(id);
+    }
+
+    @Test
+    @Transactional
+    void searchBookTest(){
+        UUID id = UUID.fromString("3498c79b-ebf6-4bc8-be29-dbe5e5e1c203");
+        Book book = repository.findById(id).orElse(null);
+        System.out.println("BOOK");
+        System.out.println(book.getTitle());
+
+        System.out.println("AUTHOR");
+        System.out.println(book.getAuthor().getName());
     }
 }

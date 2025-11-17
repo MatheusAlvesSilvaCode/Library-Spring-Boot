@@ -35,7 +35,9 @@ public class Book {
 
     // Uma coluna que relaciona com Autor, devemos colocar o objeto nela.
     @JoinColumn(name = "id_author")
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(
+            //cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY //Lazy vai me trazer só os dados do Livro
+    )
     private Author author;
-
 }
