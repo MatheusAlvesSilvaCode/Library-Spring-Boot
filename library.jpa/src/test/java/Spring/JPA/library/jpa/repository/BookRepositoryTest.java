@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.UUID;
 
 @SpringBootTest
@@ -19,10 +20,13 @@ class BookRepositoryTest {
     AuthorRepository authorRepository;
 
     @Autowired
+    BookRepository bookRepository;
+
+    @Autowired
     BookRepository repository;
 
     @Test
-    void salvarTest(){
+    void saveTest(){
         Book book = new Book();
 
         book.setIsbn("257886-0303");
@@ -41,7 +45,7 @@ class BookRepositoryTest {
     }
 
     @Test
-    void salvarCascadeTest(){
+    void saveCascadeTest(){
         Book book = new Book();
         book.setIsbn("257886-0303");
         book.setPrice(BigDecimal.valueOf(99));
@@ -60,7 +64,7 @@ class BookRepositoryTest {
     }
 
     @Test
-    void salveAuthorAndBook(){
+    void saveAuthorAndBook(){
 
         Book book = new Book();
         book.setIsbn("255586-0202");
@@ -115,5 +119,38 @@ class BookRepositoryTest {
 
         System.out.println("AUTHOR");
         System.out.println(book.getAuthor().getName());
+    }
+
+    @Test
+    void saveAuthorWithBookTest(){
+        Author author = new Author();
+        author.setName("Pablo Escobar");
+        author.setNationality("Colombiano");
+        author.setDateOfBitrh(LocalDate.of(1896,5,26));
+
+        Book book = new Book();
+        book.setIsbn("12351-6574");
+        book.setGenre(GenreBook.ROMANCE);
+        book.setPrice(BigDecimal.valueOf(130.99));
+        book.setTitle("Maus");
+        book.setPublicationDate(LocalDate.of(2002,10,4));
+        book.setAuthor(author);
+
+        Book book2 = new Book();
+        book2.setIsbn("232-56656");
+        book2.setGenre(GenreBook.FANTASIA);
+        book2.setPrice(BigDecimal.valueOf(59.99));
+        book2.setTitle("Escudo do Príncipe");
+        book2.setPublicationDate(LocalDate.of(1999,12,25));
+        book2.setAuthor(author);
+
+        author.setBooks(new ArrayList<>());
+        author.getBooks().add(book);
+        author.getBooks().add(book2);
+
+        authorRepository.save(author);
+        bookRepository.saveAll(author.getBooks());
+
+
     }
 }
