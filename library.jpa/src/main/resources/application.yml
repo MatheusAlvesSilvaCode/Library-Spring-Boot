@@ -7,6 +7,9 @@ spring:
     password: postgres
     driver-class-name: org.postgresql.Driver
   jpa:
+    show-sql: true # Mostra no log o sql.
     hibernate:
       ddl-auto: update # Apenas para estudo, não é recomendado e muitas vezes nem possível.
-    show-sql: true # Mostra no log o sql.
+    properties:
+      hibernate:
+        format_sql: true

@@ -14,7 +14,7 @@ import java.util.UUID;
 @Table(name="author", schema = "public") //Nao é obrigatorio, mas é bom por caso voce tem uma estrutura de esquemas no seu banco
 @Getter // Anotação para gerar getter's e setter's
 @Setter // Anotação para gerar getter's e setter's
-@ToString
+@ToString(exclude = "books")
 
 public class Author {
 
@@ -37,7 +37,7 @@ public class Author {
     @Column(name = "nationality", length = 50, nullable = false)
     private String nationality;
 
-    @OneToMany(mappedBy = "author") // Um autor, para muitos livros.
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.LAZY) // Um autor, para muitos livros.
     private List<Book> books;
 
 }

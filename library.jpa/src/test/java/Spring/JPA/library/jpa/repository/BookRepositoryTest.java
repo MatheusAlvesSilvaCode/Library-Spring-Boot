@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @SpringBootTest
@@ -122,35 +122,36 @@ class BookRepositoryTest {
     }
 
     @Test
-    void saveAuthorWithBookTest(){
-        Author author = new Author();
-        author.setName("Pablo Escobar");
-        author.setNationality("Colombiano");
-        author.setDateOfBitrh(LocalDate.of(1896,5,26));
-
-        Book book = new Book();
-        book.setIsbn("12351-6574");
-        book.setGenre(GenreBook.ROMANCE);
-        book.setPrice(BigDecimal.valueOf(130.99));
-        book.setTitle("Maus");
-        book.setPublicationDate(LocalDate.of(2002,10,4));
-        book.setAuthor(author);
-
-        Book book2 = new Book();
-        book2.setIsbn("232-56656");
-        book2.setGenre(GenreBook.FANTASIA);
-        book2.setPrice(BigDecimal.valueOf(59.99));
-        book2.setTitle("Escudo do Príncipe");
-        book2.setPublicationDate(LocalDate.of(1999,12,25));
-        book2.setAuthor(author);
-
-        author.setBooks(new ArrayList<>());
-        author.getBooks().add(book);
-        author.getBooks().add(book2);
-
-        authorRepository.save(author);
-        bookRepository.saveAll(author.getBooks());
-
-
+    void searchForTitleTest(){
+        List<Book> list = repository.findByTitle("Harry Potter");
+        list.forEach(System.out::println);
     }
+
+    @Test
+    void searchForIsbnTest(){
+        List<Book> list = repository.findByIsbn("23232-124576");
+        list.forEach(System.out::println);
+    }
+
+    @Test
+    void serachForPriceTest(){
+        List<Book> list = repository.findByPrice(BigDecimal.valueOf(59.99));
+        list.forEach(System.out::println);
+    }
+
+    @Test
+    void serachForGenreAndTitleTest(){
+       List<Book> list = repository.findByGenreAndPrice(GenreBook.FANTASIA, BigDecimal.valueOf(59.99));
+       list.forEach(System.out::println);
+    }
+
+
+    @Test
+    void searchTitleOrGenreTest(){
+        var title = "Maus";
+        var genre = GenreBook.BIOGRAFIA;
+        List<Book> list = repository.findByTitleOrGenre(title, genre);
+        list.forEach(System.out::println);
+    }
+
 }

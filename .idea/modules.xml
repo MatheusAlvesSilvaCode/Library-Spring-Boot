@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/library.jpa.iml" filepath="$PROJECT_DIR$/.idea/library.jpa.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library.jpa/library.jpa.iml" filepath="$PROJECT_DIR$/library.jpa/library.jpa.iml" />
     </modules>
   </component>
 </project>

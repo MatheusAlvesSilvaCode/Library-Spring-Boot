@@ -2,6 +2,7 @@ package Spring.JPA.library.jpa.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -9,7 +10,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "book")
-@Data // Gera os getters e setters de forma aut. como construtores vazios e etc.
+@ToString(exclude = "author")
+@Data // Gera os getters e setters de forma aut. como construtores vazios e etc e to String
 public class Book {
 
     @Id
