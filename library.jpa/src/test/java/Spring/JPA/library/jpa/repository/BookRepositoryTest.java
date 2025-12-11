@@ -67,15 +67,15 @@ class BookRepositoryTest {
     void saveAuthorAndBook(){
 
         Book book = new Book();
-        book.setIsbn("255586-0202");
-        book.setPrice(BigDecimal.valueOf(79));
-        book.setGenre(GenreBook.MISTERIO);
-        book.setTitle("Memory");
-        book.setPublicationDate(LocalDate.of(2000,5,7));
+        book.setIsbn("003262-00215");
+        book.setPrice(BigDecimal.valueOf(560.33));
+        book.setGenre(GenreBook.HORROR);
+        book.setTitle("A Vingança do Sanduiche de Mortadela");
+        book.setPublicationDate(LocalDate.of(2006,6,7));
 
         Author author = new Author(); // instanciado o objt novo autor
-        author.setName("Manoel Gomes"); // Incluindo o nome.
-        author.setNationality("Itallian"); // incluindo nacionalidade
+        author.setName("Alfred Pennyworf"); // Incluindo o nome.
+        author.setNationality("Gothamita"); // incluindo nacionalidade
         author.setDateOfBitrh(LocalDate.of(1756, 8, 6)); // Data de nascimento
 
         authorRepository.save(author);
@@ -92,14 +92,26 @@ class BookRepositoryTest {
         Author matheus = authorRepository.findById(id1).orElse(null);
 
         bookforupdate.setAuthor(matheus);
-        System.out.println("Contudo variavel Matheus: " + matheus);
+        System.out.println("Conteúdo variavel Matheus: " + matheus);
         repository.save(bookforupdate);
 
     }
 
+    //Method for update book name with id book
+    @Test
+    void updateNamebook(){
+        UUID id = UUID.fromString("d4edc68c-c1da-42a5-8306-0d3dc4dfbdbc");
+        var bookforupdatename = repository.findById(id).orElse(null);
+
+        var newname = "Gotham City, The Revenge";
+
+        bookforupdatename.setTitle(newname);
+        repository.save(bookforupdatename);
+    }
+
     @Test
     void delete(){
-        UUID id = UUID.fromString("8a596e25-052e-41dc-a2a9-1a1f75a45562");
+        UUID id = UUID.fromString("8a0b9877-8cd5-4cc9-8368-5c8126a8133b");
         repository.deleteById(id);
     }
 

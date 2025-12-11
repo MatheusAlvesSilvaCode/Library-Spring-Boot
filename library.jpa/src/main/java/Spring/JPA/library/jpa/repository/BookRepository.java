@@ -28,8 +28,11 @@ public interface BookRepository extends JpaRepository<Book, UUID> {
     // select * from book where genre = genre
     List<Book> findByGenre(GenreBook genre);
 
+    // select * from book where genre = ? and price = ?
     List<Book> findByGenreAndPrice(GenreBook genre, BigDecimal price);
 
+    // select * from book where title = ? or genre = ?
     List<Book> findByTitleOrGenre(String title, GenreBook genre);
+
 
 }
