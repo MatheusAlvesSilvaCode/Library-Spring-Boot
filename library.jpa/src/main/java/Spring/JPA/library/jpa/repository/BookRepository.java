@@ -4,6 +4,7 @@ import Spring.JPA.library.jpa.model.Author;
 import Spring.JPA.library.jpa.model.Book;
 import Spring.JPA.library.jpa.model.GenreBook;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -14,7 +15,6 @@ public interface BookRepository extends JpaRepository<Book, UUID> {
     //Query Method
     // select * from author where id_author = id
     List<Book> findByAuthor(Author author);
-
 
     //select * from book where title = title
     List<Book> findByTitle(String title);
@@ -34,5 +34,34 @@ public interface BookRepository extends JpaRepository<Book, UUID> {
     // select * from book where title = ? or genre = ?
     List<Book> findByTitleOrGenre(String title, GenreBook genre);
 
+    // JPQL -> referencia as entidades e as propriedades.
+    //  select.* from book order by l.titulo, price
+    @Query(" select l from Book as l order by l.title, l.price ")
+    List<Book> ListAllBooksforTitleandPrice();
+
+
+    /*
+    * SELECT b.id, b.title as name_book, a.name as name_author
+    from book as b
+    join author as a on a.id = b.id_author
+    */
+    @Query("select a from Book b join b.author a ")
+    List<Author> ListauthorofBook();
+
+
+    // select distinct l.* from book l
+    @Query("select distinct b.title from Book b")
+    List<String> listOtherBooks();
+
+
+    //Para fazer querys grandes, use tres aspas simples para conseguir quebrar as linhas.
+    @Query("""
+    select b.genre
+    from Book b 
+    join b.author a 
+    where a.nationality = "Gothamita"
+    order by b.genre
+""")
+    List<String> ListSAuthorGothamita();
 
 }

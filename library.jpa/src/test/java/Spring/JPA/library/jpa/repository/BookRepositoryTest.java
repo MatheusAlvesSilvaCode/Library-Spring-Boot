@@ -13,14 +13,15 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * @see BookRepositoryTest
+ * */
+
 @SpringBootTest
 class BookRepositoryTest {
 
     @Autowired
     AuthorRepository authorRepository;
-
-    @Autowired
-    BookRepository bookRepository;
 
     @Autowired
     BookRepository repository;
@@ -29,11 +30,11 @@ class BookRepositoryTest {
     void saveTest(){
         Book book = new Book();
 
-        book.setIsbn("257886-0303");
-        book.setPrice(BigDecimal.valueOf(99));
-        book.setGenre(GenreBook.FANTASIA);
-        book.setTitle("Dune");
-        book.setPublicationDate(LocalDate.of(196,2,4));
+        book.setIsbn("0020121-5694554");
+        book.setPrice(BigDecimal.valueOf(45.33));
+        book.setGenre(GenreBook.MISTERIO);
+        book.setTitle("Lisboa Noir");
+        book.setPublicationDate(LocalDate.of(2003,7,1));
 
         Author author = authorRepository
                 .findById(UUID.fromString("89f299f2-bf63-4f63-a660-c01ff7ee581e"))
@@ -67,16 +68,16 @@ class BookRepositoryTest {
     void saveAuthorAndBook(){
 
         Book book = new Book();
-        book.setIsbn("003262-00215");
-        book.setPrice(BigDecimal.valueOf(560.33));
-        book.setGenre(GenreBook.HORROR);
-        book.setTitle("A Vingança do Sanduiche de Mortadela");
-        book.setPublicationDate(LocalDate.of(2006,6,7));
+        book.setIsbn("369852-458565");
+        book.setPrice(BigDecimal.valueOf(430.63));
+        book.setGenre(GenreBook.BIOGRAFIA);
+        book.setTitle("A destruição de Marineford");
+        book.setPublicationDate(LocalDate.of(2008,4,12));
 
         Author author = new Author(); // instanciado o objt novo autor
-        author.setName("Alfred Pennyworf"); // Incluindo o nome.
-        author.setNationality("Gothamita"); // incluindo nacionalidade
-        author.setDateOfBitrh(LocalDate.of(1756, 8, 6)); // Data de nascimento
+        author.setName("Clarice Lispector"); // Incluindo o nome.
+        author.setNationality("Suzanense"); // incluindo nacionalidade
+        author.setDateOfBitrh(LocalDate.of(1998, 10, 3)); // Data de nascimento
 
         authorRepository.save(author);
         book.setAuthor(author);
@@ -100,9 +101,8 @@ class BookRepositoryTest {
     //Method for update book name with id book
     @Test
     void updateNamebook(){
-        UUID id = UUID.fromString("d4edc68c-c1da-42a5-8306-0d3dc4dfbdbc");
+        UUID id = UUID.fromString("d4edc68c-c1da-42a5-8306-0d3dc4dfbdbc"); // convert UUID for string.
         var bookforupdatename = repository.findById(id).orElse(null);
-
         var newname = "Gotham City, The Revenge";
 
         bookforupdatename.setTitle(newname);
@@ -157,13 +157,36 @@ class BookRepositoryTest {
        list.forEach(System.out::println);
     }
 
-
     @Test
     void searchTitleOrGenreTest(){
         var title = "Maus";
         var genre = GenreBook.BIOGRAFIA;
         List<Book> list = repository.findByTitleOrGenre(title, genre);
         list.forEach(System.out::println);
+    }
+
+    @Test
+    void ListbookWithJPQLQueryTest(){
+        var result = repository.ListAllBooksforTitleandPrice();
+        result.forEach(System.out::println);
+    }
+
+    @Test
+    void ListAuthorsOfBookTest(){
+        var result = repository.ListauthorofBook();
+        result.forEach(System.out::println);
+    }
+
+    @Test
+    void ListDistinctBooksTest(){
+        var result = repository.listOtherBooks();
+        result.forEach(System.out::println);
+    }
+
+    @Test
+    void ListGothamitasAuthor(){
+        var result = repository.ListSAuthorGothamita();
+        result.forEach(System.out::println);
     }
 
 }
