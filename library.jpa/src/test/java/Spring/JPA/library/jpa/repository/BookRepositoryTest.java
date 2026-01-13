@@ -189,4 +189,16 @@ class BookRepositoryTest {
         result.forEach(System.out::println);
     }
 
+    @Test
+    void ListarPorGeneroParam(){
+        var result = repository.FindByGenre(GenreBook.HORROR, "price");
+        result.forEach(System.out::println);
+    }
+
+    @Test
+    void ListarPorGeneroPositionals(){
+        var result = repository.FindByGenrePositionalsParameters("price", GenreBook.HORROR);
+        result.forEach(System.out::println);
+    }
+
 }

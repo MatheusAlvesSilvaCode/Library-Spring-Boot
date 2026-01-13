@@ -5,6 +5,7 @@ import Spring.JPA.library.jpa.model.Book;
 import Spring.JPA.library.jpa.model.GenreBook;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -64,4 +65,13 @@ public interface BookRepository extends JpaRepository<Book, UUID> {
 """)
     List<String> ListSAuthorGothamita();
 
+    //Named Parameters -> Parametros nomeados
+    @Query("select b from Book b where b.genre = :genre order by :ParaOrder")
+    List<Book> FindByGenre(@Param("genre") GenreBook genreBook,
+                           @Param("ParaOrder") String Nomepropriedade);
+
+
+    //Positionals -> Parametro por posição
+    @Query("select b from Book b where b.genre = ?2 order by ?1")
+    List<Book> FindByGenrePositionalsParameters(String Nomepropriedade, GenreBook genreBook );
 }
