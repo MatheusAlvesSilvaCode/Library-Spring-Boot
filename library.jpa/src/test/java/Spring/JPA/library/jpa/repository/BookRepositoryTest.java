@@ -201,4 +201,14 @@ class BookRepositoryTest {
         result.forEach(System.out::println);
     }
 
+    @Test
+    void DeleteForGenre(){
+        repository.DeleteByGenre(GenreBook.BIOGRAFIA);
+    }
+
+    @Test
+    void updateDatePublication(){
+        UUID id = UUID.fromString("243b3ad4-ba66-4e5f-a568-1d9b3ffffe71"); // convert UUID for string.
+        repository.updtaDatePublication(LocalDate.of(2026,5,16), id);
+    }
 }

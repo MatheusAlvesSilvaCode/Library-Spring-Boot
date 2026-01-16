@@ -4,10 +4,13 @@ import Spring.JPA.library.jpa.model.Author;
 import Spring.JPA.library.jpa.model.Book;
 import Spring.JPA.library.jpa.model.GenreBook;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -74,4 +77,14 @@ public interface BookRepository extends JpaRepository<Book, UUID> {
     //Positionals -> Parametro por posição
     @Query("select b from Book b where b.genre = ?2 order by ?1")
     List<Book> FindByGenrePositionalsParameters(String Nomepropriedade, GenreBook genreBook );
+
+    @Modifying // É preciso quando vai fazer qualquer operação que faça mudança de registro, não apenas leitura.
+    @Transactional
+    @Query("delete from Book where genre = ?1")
+    void DeleteByGenre(GenreBook genreBook);
+
+    @Modifying
+    @Transactional
+    @Query("update Book b set b.publicationDate = ?1 where b.id = ?2")
+    void updtaDatePublication(LocalDate publicationDate, UUID id);
 }
