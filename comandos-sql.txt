@@ -2,7 +2,10 @@ create table author (
  id uuid not null primary key,
  name varchar (100) not null,
  dob date not null,
- nationality varchar(50) not null
+ nationality varchar(50) not null,
+ create_at timestamp,
+ update_at timestamp,
+ id_user uuid
 );
 
 create table book (
@@ -12,6 +15,9 @@ title varchar (150) not null,
 publication_date date not null,
 genre varchar(30) not null,
 price numeric(18,2),
+create_at timestamp,
+update_at timestamp,
+id_user uuid
 id_author uuid not null references author (id),
 constraint chk_genre check (genre in ('FICCAO', 'FANTASIA', 'MISTERIO', 'ROMANCE', 'BIOGRAFIA', 'HORROR'))
 );

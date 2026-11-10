@@ -4,8 +4,12 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,7 +19,7 @@ import java.util.UUID;
 @Getter // Anotação para gerar getter's e setter's
 @Setter // Anotação para gerar getter's e setter's
 @ToString(exclude = "books")
-
+@EntityListeners(AuditingEntityListener.class)
 public class Author {
 
     @Deprecated
@@ -39,5 +43,17 @@ public class Author {
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.LAZY) // Um autor, para muitos livros.
     private List<Book> books;
+
+    @CreatedDate // Criar automatico a data de criação
+    @Column(name = "create_at")
+    private LocalDateTime create_at;
+
+    @LastModifiedDate // Criar automatico a data de atualização
+    @Column(name = "update_at")
+    private LocalDateTime update_at;
+
+
+    @Column(name = "id_user")
+    private UUID idUser;
 
 }
